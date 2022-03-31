@@ -7,7 +7,10 @@ import java.util.Scanner;
 
 public class Menu {
 
-// to-do -- build out
+    Scanner scanner= new Scanner(System.in);
+
+    
+
 
 
 }

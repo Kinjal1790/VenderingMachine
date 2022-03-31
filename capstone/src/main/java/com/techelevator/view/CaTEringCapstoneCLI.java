@@ -1,6 +1,4 @@
-package com.techelevator;
-
-import com.techelevator.view.Menu;
+package com.techelevator.view;
 
 public class CaTEringCapstoneCLI {
 
