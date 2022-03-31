@@ -1,12 +1,11 @@
 package com.techelevator;
 
+import com.techelevator.CateringItems.*;
 import com.techelevator.ui.Menu;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class CaTEringCapstoneCLI {
 
@@ -19,7 +18,8 @@ public class CaTEringCapstoneCLI {
 //	}
 
 
-	List<String[]> products = new ArrayList<>();
+	Map<String, Product> productMap = new TreeMap<>();
+
 
 	public static void main(String[] args) {
 		//Menu menu = new Menu();
@@ -41,6 +41,8 @@ public class CaTEringCapstoneCLI {
 
 			else if (choice.equals('p')) {
 				// purchasing product
+
+				purchasingManu();
 				// feed money; select item, finish transaction
 			}
 
@@ -63,21 +65,76 @@ public class CaTEringCapstoneCLI {
 				String line = fileReader.nextLine();
 				String[] columns = line.split(",");
 
+
 				String slot = columns[0];
 				String itemName = columns[1];
-			//	String productType = columns[2];
+				String productType = columns[2].toLowerCase();
 				String price = columns[3];
-				int remainingQuantity = 7;
 
+
+				Product product;
+				switch (productType) {
+					case "munchy":
+						product = new Munchy(slot, itemName, price);
+						break;
+					case "sandwich":
+						product = new Sandwich(slot, itemName, price);
+						break;
+					case "drink":
+						product = new Drink(slot, itemName, price);
+						break;
+					case "dessert":
+					default:
+						product = new Dessert(slot, itemName, price);
+						break;
+				}
+
+				productMap.putIfAbsent(product.getSlot(), product);
 
 			}
-
-			products.add();
-
+			Menu.getSelectedProductChoice(productMap);
 		}
 
 		catch(IOException e){
 				e.getMessage();
 			}
 		}
+
+		private void purchasingManu() {
+
+			while (true) {
+				String choice = Menu.purchasingProcessMenuDisplay();
+
+				switch (choice) {
+					case "m":
+						// make a method that will do feed money
+						moneyinput();
+
+						break;
+					case "s":
+						// make a method to select item
+						break;
+					case "f":
+						// make a method to finish transaction
+						break;
+				}
+
+			}
+		}
+
+	private void moneyinput() {
+
+		String balance = Menu.moneyInputByUser();
+		if (Integer.parseInt(balance)%1==0){
+			return
+
+		}
+
 	}
+
+}
+
+
+
+
+
