@@ -24,20 +24,25 @@ public class CaTEringCapstoneCLI {
 
 
 	public void run() {
+		try {
+			while (true) {
+				String choice = Menu.getHOmeScreenChoice();
 
-		while (true) {
+				if (choice.equals("d")) {
+					processAvailableInventory();
 
-			String choice = Menu.getHOmeScreenChoice();
+				} else if (choice.equals("p")) {
+					purchasingManu();
 
-			if (choice.equals("d")) {
-				processAvailableInventory();
+				} else if (choice.equals("e")) {
+					break;
+				}
 
-			} else if (choice.equals("p")) {
-				purchasingManu();
-
-			} else if (choice.equals("e")) {
-				break;
 			}
+
+	}
+		catch(StringIndexOutOfBoundsException e){
+			System.out.println("Try again.");
 		}
 	}
 

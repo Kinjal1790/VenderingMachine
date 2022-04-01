@@ -28,6 +28,7 @@ public class Menu {
         System.out.println();
         System.out.print("Please select an option: ");
 
+
         return input.nextLine().trim().toLowerCase().substring(0, 1);
     }
 
