@@ -6,6 +6,7 @@ import org.w3c.dom.ls.LSOutput;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.sql.SQLOutput;
 import java.util.Map;
 import java.util.Scanner;
@@ -30,20 +31,8 @@ public class Menu {
         return input.nextLine().trim().toLowerCase().substring(0, 1);
     }
 
-   public static String getSelectedProductChoice(Map<String, Product> productMap) {
 
-       System.out.println();
-       //slot  //name // price // items quality (default 7) //
-
-       Set<String> slots = productMap.keySet();
-       for (String slot : slots) {
-           System.out.println(productMap.get(slot));
-       }
-       getHOmeScreenChoice();
-       return input.nextLine().trim().toLowerCase();
-   }
-
-    public static String purchasingProcessMenuDisplay() {
+    public static String purchasingProcessMenuDisplay(BigDecimal money) {
 
         System.out.println();
         System.out.println("(M) Feed Money");
@@ -51,15 +40,30 @@ public class Menu {
         System.out.println("(F) Finish Transaction");
         System.out.println();
 
-        System.out.println("Current Money Provided: $");
+        System.out.println("Current Money Provided: $" + money);
 
         return input.nextLine().trim().toLowerCase().substring(0, 1);
     }
 
 
-    public static String moneyInputByUser() {
-        System.out.print("Current Money Provided: $");
-            return input.nextLine().trim();
+    public static int addMoney(){
+
+        System.out.println();
+
+        System.out.println("(1) $1");
+        System.out.println("(2) $5");
+        System.out.println("(3) $10");
+        System.out.println("(4) $20");
+
+        System.out.print("Please select an option: ");
+        return Integer.parseInt(input.nextLine().trim());
 
     }
+
+    public static String selectItem(){
+        System.out.print("Enter the slot of item you want?: ");
+        return input.nextLine().trim().toUpperCase().substring(0,2);
+    }
+
+
 }
