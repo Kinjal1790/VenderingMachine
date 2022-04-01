@@ -12,15 +12,6 @@ import static com.techelevator.auditLog.log.purchaseLog;
 
 public class CaTEringCapstoneCLI {
 
-
-//
-//	private Menu menu;
-//
-//	public CaTEringCapstoneCLI(Menu menu) {
-//		this.menu = menu;
-//	}
-
-
 	Map<String, Product> productMap = new TreeMap<>();
 	BigDecimal money = new BigDecimal(0);
 	BigDecimal zero = BigDecimal.ZERO;
@@ -36,21 +27,20 @@ public class CaTEringCapstoneCLI {
 
 		while (true) {
 
-			//  to do -- build out main menu
 			String choice = Menu.getHOmeScreenChoice();
+
 			if (choice.equals("d")) {
 				processAvailableInventory();
 
 			} else if (choice.equals("p")) {
 				purchasingManu();
 
-				// feed money; select item, finish transaction
 			} else if (choice.equals("e")) {
 				break;
 			}
 		}
-
 	}
+
 
 	public void processAvailableInventory() {
 
