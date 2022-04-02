@@ -17,8 +17,7 @@ public class Menu {
     private static final Scanner input = new Scanner(System.in);
 
 
-    public static String getHOmeScreenChoice() {
-
+    public static String getHomeScreenChoice() {
 
         System.out.println();
         System.out.println("What would you like to do?");
@@ -28,12 +27,11 @@ public class Menu {
         System.out.println();
         System.out.print("Please select an option: ");
 
-
         return input.nextLine().trim().toLowerCase().substring(0, 1);
     }
 
 
-    public static String purchasingProcessMenuDisplay(BigDecimal money) {
+    public static String purchasingMenuDisplay(BigDecimal money) {
 
         System.out.println();
         System.out.println("(M) Feed Money");
@@ -47,7 +45,7 @@ public class Menu {
     }
 
 
-    public static int addMoney(){
+    public static int feedMoney(){
 
         System.out.println();
 
@@ -60,6 +58,7 @@ public class Menu {
         return Integer.parseInt(input.nextLine().trim());
 
     }
+
 
     public static String selectItem(){
         System.out.print("Enter the slot of item you want?: ");

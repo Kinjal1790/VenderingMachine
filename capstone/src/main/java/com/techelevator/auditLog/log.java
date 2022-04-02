@@ -14,10 +14,8 @@ public class log {
         String path = "logs.txt";
         File file = new File(path);
 
-
         try (FileWriter fileWriter = new FileWriter(file, true);
-             PrintWriter writer = new PrintWriter(fileWriter)
-        ) {
+             PrintWriter writer = new PrintWriter(fileWriter)) {
             LocalDateTime now = LocalDateTime.now();
             DateTimeFormatter targetFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm:ss a");
 
@@ -26,11 +24,9 @@ public class log {
             String message = String.format(template, now.format(targetFormat).toString(), transactionMessage);
             writer.println(message);
         }
-        catch (IOException e)
-        {
+
+        catch (IOException e) {
 
         }
-
     }
-
 }

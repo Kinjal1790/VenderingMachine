@@ -5,13 +5,19 @@ import org.junit.Test;
 
 public class MenuTests {
 
+//    @Test
+//    public void letterD_shouldReturn_displayOfAllItems(){
+//
+//        String letterToTest= "D";
+//        CaTEringCapstoneCLI catering = new CaTEringCapstoneCLI();
+//
+//
+//        display.run();
+//
+//    }
+
+
     @Test
-    public void letterD_shouldReturn_displayOfAllItems(){
-
-        String letterToTest= "D";
-        CaTEringCapstoneCLI display= new CaTEringCapstoneCLI();
-        display.run();
-
-    }
+    public void Money_Should
 
 }

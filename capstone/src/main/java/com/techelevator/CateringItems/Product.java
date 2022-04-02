@@ -14,6 +14,7 @@ public abstract class Product {
 
 
     public Product(String slot, String itemName, String price, String productType){
+
         this.slot = slot;
         this.price = new BigDecimal(price);
         this.itemName = itemName;
@@ -37,7 +38,8 @@ public abstract class Product {
         return price;
     }
 
-    public int getQuantity() { return quantity; }
+    public int getQuantity() {
+        return quantity; }
 
     public boolean purchaseItem(){
         if(quantity>0) {
@@ -52,13 +54,11 @@ public abstract class Product {
     public abstract String dispense();
 
 
-
     @Override
     public String toString(){
         String template = "%s) %s $ %.2f (%d %s)";
         return String.format(template,getSlot(),getItemName(), getPrice(), getQuantity(), "remaining");
     }
-
 
 }
 

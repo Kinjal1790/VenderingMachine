@@ -17,7 +17,6 @@ public class CaTEringCapstoneCLI {
 	BigDecimal zero = BigDecimal.ZERO;
 
 	public static void main(String[] args) {
-		//Menu menu = new Menu();
 		CaTEringCapstoneCLI cli = new CaTEringCapstoneCLI();
 		cli.run();
 	}
@@ -26,20 +25,18 @@ public class CaTEringCapstoneCLI {
 	public void run() {
 		try {
 			while (true) {
-				String choice = Menu.getHOmeScreenChoice();
+				String choice = Menu.getHomeScreenChoice();
 
 				if (choice.equals("d")) {
 					processAvailableInventory();
 
 				} else if (choice.equals("p")) {
-					purchasingManu();
+					purchasingMenu();
 
 				} else if (choice.equals("e")) {
 					break;
 				}
-
 			}
-
 	}
 		catch(StringIndexOutOfBoundsException e){
 			System.out.println("Try again.");
@@ -49,7 +46,6 @@ public class CaTEringCapstoneCLI {
 
 	public void processAvailableInventory() {
 
-
 		File file = new File("catering.csv");
 		try (Scanner fileReader = new Scanner(file)) {
 
@@ -58,119 +54,124 @@ public class CaTEringCapstoneCLI {
 				String[] columns = line.split(",");
 
 
-				String slot = columns[0];
+				String slotIdentifier = columns[0];
 				String itemName = columns[1];
 				String productType = columns[2].toLowerCase();
 				String price = columns[3];
 
-
 				Product product;
 				switch (productType) {
 					case "munchy":
-						product = new Munchy(slot, itemName, price, productType);
+						product = new Munchy(slotIdentifier, itemName, price, productType);
 						break;
 					case "sandwich":
-						product = new Sandwich(slot, itemName, price, productType);
+						product = new Sandwich(slotIdentifier, itemName, price, productType);
 						break;
 					case "drink":
-						product = new Drink(slot, itemName, price, productType);
+						product = new Drink(slotIdentifier, itemName, price, productType);
 						break;
 					case "dessert":
 					default:
-						product = new Dessert(slot, itemName, price, productType);
+						product = new Dessert(slotIdentifier, itemName, price, productType);
 						break;
 				}
-
 				productMap.putIfAbsent(product.getSlot(), product);
-
 			}
 			System.out.println();
-
 			displayingItems();
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			e.getMessage();
 		}
 	}
 
 	public void displayingItems() {
+
 		Set<String> slots = productMap.keySet();
 		for (String slot : slots) {
 			System.out.println(productMap.get(slot));
 		}
 	}
 
+	public void purchasingMenu() {
 
-	public void purchasingManu() {
 		while (true) {
-			String choice = Menu.purchasingProcessMenuDisplay(money);
-			
+			String choice = Menu.purchasingMenuDisplay(money);
 
 			if ("m".equals(choice)) {
-				BigDecimal moneyFeed = zero;
-				int moneyAmount = Menu.addMoney();
-				if (moneyAmount == 1) {
-					moneyFeed = new BigDecimal(1);
-					money = money.add(moneyFeed);
-
-				} else if (moneyAmount == 2) {
-					moneyFeed = new BigDecimal(5);
-					money = money.add(moneyFeed);
-
-				} else if (moneyAmount == 3) {
-					moneyFeed = new BigDecimal(10);
-					money = money.add(moneyFeed);
-
-				} else if (moneyAmount == 4) {
-					moneyFeed = new BigDecimal(20);
-					money = money.add(moneyFeed);
-				}
-				String message = "MONEY FED:		$" + moneyFeed + " $" + money;
-				purchaseLog(message);
-
-			} 
+				BigDecimal moneyFed = zero;
+				int moneyAmount = Menu.feedMoney();
+				processingFeededMoney(moneyFed, moneyAmount);
+			}
 			else if ("s".equals(choice)) {
 				displayingItems();
 				String itemSelected = Menu.selectItem();
-				printingSelectedItem(itemSelected);
+				processingSelectedItem(itemSelected);
 
-				// make a method to select item
 			} else if ("f".equals(choice)) {
-				// make a method to finish transaction
 				calculatingRemainingChange();
-
 				break;
 
 			}
 		}
 	}
 
+	private void processingFeededMoney(BigDecimal moneyFed, int moneyAmount) {
 
-	public void printingSelectedItem(String itemSelected) {
+		if (moneyAmount == 1) {
+			moneyFed = new BigDecimal(1);
+			money = money.add(moneyFed);
+
+		} else if (moneyAmount == 2) {
+			moneyFed = new BigDecimal(5);
+			money = money.add(moneyFed);
+
+		} else if (moneyAmount == 3) {
+			moneyFed = new BigDecimal(10);
+			money = money.add(moneyFed);
+
+		} else if (moneyAmount == 4) {
+			moneyFed = new BigDecimal(20);
+			money = money.add(moneyFed);
+		}
+
+		String message = "MONEY FED:		$" + moneyFed + " $" + money;
+		purchaseLog(message);
+	}
+
+
+	public void processingSelectedItem(String itemSelected) {
+
 		if (!productMap.containsKey(itemSelected)) {
 			System.out.println("That slot item is not available");
-		} else if (productMap.containsKey(itemSelected)) {
+
+		}
+		else if (productMap.containsKey(itemSelected)) {
 
 			Product product = productMap.get(itemSelected);
-			double available = money.doubleValue();
-			double price = product.getPrice().doubleValue();
+			dispensingItemByVerifyingAvailablityOfItemAndMoney(product);
+		}
+	}
 
-			if (available >= price) {
-				if (product.purchaseItem()) {
+	private void dispensingItemByVerifyingAvailablityOfItemAndMoney(Product product) {
+		double availableMoney = money.doubleValue();
+		double price = product.getPrice().doubleValue();
 
-					System.out.println(product.dispense());
+		if (availableMoney >= price) {
 
-					money = money.subtract(product.getPrice());
-
-					String message = product.getItemName()  + "		" + product.getSlot() + " $" + (money.add(product.getPrice())) + " $" + money;
-					purchaseLog(message);
-
-
-				} else {
-					System.out.println("Product sold out");
-				}
-			} else {
-				System.out.println("Insufficient funds");
+			if (product.purchaseItem()) {
+				System.out.println(product.dispense());
+				money = money.subtract(product.getPrice());
+				String message = product.getItemName()  + "		" + product.getSlot() + " $" + (money.add(product.getPrice())) + " $" + money;
+				purchaseLog(message);
 			}
+			else {
+				System.out.println("Product sold out");
+			}
+		}
+
+		else {
+			System.out.println("Insufficient funds");
 		}
 	}
 
@@ -193,8 +194,6 @@ public class CaTEringCapstoneCLI {
 		purchaseLog(message);
 
 		money = zero;
-
-
 	}
 
 }
