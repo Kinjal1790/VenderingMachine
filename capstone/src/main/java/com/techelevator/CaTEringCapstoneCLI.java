@@ -36,11 +36,16 @@ public class CaTEringCapstoneCLI {
 				} else if (choice.equals("e")) {
 					break;
 				}
+				else{
+					System.out.println("Try again.");
+				}
 			}
-	}
+		}
 		catch(StringIndexOutOfBoundsException e){
 			System.out.println("Try again.");
+
 		}
+
 	}
 
 
@@ -101,7 +106,7 @@ public class CaTEringCapstoneCLI {
 			if ("m".equals(choice)) {
 				BigDecimal moneyFed = zero;
 				int moneyAmount = Menu.feedMoney();
-				processingFeededMoney(moneyFed, moneyAmount);
+				processingFedMoney(moneyFed, moneyAmount);
 			}
 			else if ("s".equals(choice)) {
 				displayingItems();
@@ -116,7 +121,7 @@ public class CaTEringCapstoneCLI {
 		}
 	}
 
-	private void processingFeededMoney(BigDecimal moneyFed, int moneyAmount) {
+	public void processingFedMoney(BigDecimal moneyFed, int moneyAmount) {
 
 		if (moneyAmount == 1) {
 			moneyFed = new BigDecimal(1);
@@ -139,6 +144,9 @@ public class CaTEringCapstoneCLI {
 		purchaseLog(message);
 	}
 
+	public BigDecimal getMoney(){
+		return money;
+	}
 
 	public void processingSelectedItem(String itemSelected) {
 
@@ -153,7 +161,7 @@ public class CaTEringCapstoneCLI {
 		}
 	}
 
-	private void dispensingItemByVerifyingAvailablityOfItemAndMoney(Product product) {
+	public void dispensingItemByVerifyingAvailablityOfItemAndMoney(Product product) {
 		double availableMoney = money.doubleValue();
 		double price = product.getPrice().doubleValue();
 
@@ -161,7 +169,7 @@ public class CaTEringCapstoneCLI {
 
 			if (product.purchaseItem()) {
 				System.out.println(product.dispense());
-				money = money.subtract(product.getPrice());
+				removeMoney(product);
 				String message = product.getItemName()  + "		" + product.getSlot() + " $" + (money.add(product.getPrice())) + " $" + money;
 				purchaseLog(message);
 			}
@@ -173,6 +181,10 @@ public class CaTEringCapstoneCLI {
 		else {
 			System.out.println("Insufficient funds");
 		}
+	}
+
+	private void removeMoney(Product product) {
+		money = money.subtract(product.getPrice());
 	}
 
 	private void calculatingRemainingChange() {
