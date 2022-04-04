@@ -99,50 +99,58 @@ public class CaTEringCapstoneCLI {
 	}
 
 	public void purchasingMenu() {
+		try {
+			while (true) {
+				String choice = Menu.purchasingMenuDisplay(money);
 
-		while (true) {
-			String choice = Menu.purchasingMenuDisplay(money);
 
-			if ("m".equals(choice)) {
-				BigDecimal moneyFed = zero;
-				int moneyAmount = Menu.feedMoney();
-				processingFedMoney(moneyFed, moneyAmount);
+				if ("m".equals(choice)) {
+					BigDecimal moneyFed = zero;
+					int moneyAmount = Menu.feedMoney();
+					processingFedMoney(moneyFed, moneyAmount);
+				} else if ("s".equals(choice)) {
+					processAvailableInventory();
+					String itemSelected = Menu.selectItem();
+					processingSelectedItem(itemSelected);
+
+				} else if ("f".equals(choice)) {
+					calculatingRemainingChange();
+					break;
+
+				}
 			}
-			else if ("s".equals(choice)) {
-				displayingItems();
-				String itemSelected = Menu.selectItem();
-				processingSelectedItem(itemSelected);
 
-			} else if ("f".equals(choice)) {
-				calculatingRemainingChange();
-				break;
 
 			}
+		catch(NumberFormatException e){
+			System.out.print("Something went wrong.");
 		}
 	}
 
 	public void processingFedMoney(BigDecimal moneyFed, int moneyAmount) {
 
-		if (moneyAmount == 1) {
-			moneyFed = new BigDecimal(1);
-			money = money.add(moneyFed);
+			if (moneyAmount == 1) {
+				moneyFed = new BigDecimal(1);
+				money = money.add(moneyFed);
 
-		} else if (moneyAmount == 2) {
-			moneyFed = new BigDecimal(5);
-			money = money.add(moneyFed);
+			} else if (moneyAmount == 2) {
+				moneyFed = new BigDecimal(5);
+				money = money.add(moneyFed);
 
-		} else if (moneyAmount == 3) {
-			moneyFed = new BigDecimal(10);
-			money = money.add(moneyFed);
+			} else if (moneyAmount == 3) {
+				moneyFed = new BigDecimal(10);
+				money = money.add(moneyFed);
 
-		} else if (moneyAmount == 4) {
-			moneyFed = new BigDecimal(20);
-			money = money.add(moneyFed);
+			} else if (moneyAmount == 4) {
+				moneyFed = new BigDecimal(20);
+				money = money.add(moneyFed);
+			}
+			String message = "MONEY FED:		$" + moneyFed + " $" + money;
+			purchaseLog(message);
 		}
 
-		String message = "MONEY FED:		$" + moneyFed + " $" + money;
-		purchaseLog(message);
-	}
+
+
 
 	public BigDecimal getMoney(){
 		return money;
@@ -155,9 +163,9 @@ public class CaTEringCapstoneCLI {
 
 		}
 		else if (productMap.containsKey(itemSelected)) {
-
 			Product product = productMap.get(itemSelected);
 			dispensingItemByVerifyingAvailablityOfItemAndMoney(product);
+
 		}
 	}
 
@@ -189,7 +197,7 @@ public class CaTEringCapstoneCLI {
 
 	private void calculatingRemainingChange() {
 
-		BigDecimal balance = money.multiply(new BigDecimal(100));
+		 BigDecimal balance = money.multiply(new BigDecimal(100));
 		int dollar = balance.intValue() / 100;
 		balance = balance.subtract(new BigDecimal(dollar * 100));
 		int quarter = balance.intValue() / 25;
@@ -197,8 +205,12 @@ public class CaTEringCapstoneCLI {
 		balance = balance.subtract(new BigDecimal(quarter * 25));
 		int dime = balance.intValue() / 10;
 
+
 		balance = balance.subtract(new BigDecimal(dime * 10));
 		int nickle = balance.intValue() / 5;
+		if (nickle%5!=0) {
+			nickle = 0;
+		}
 
 
 		System.out.println("Here is the change: " + dollar + " dollar " + quarter + " quarter " + dime + " dime " + nickle + " nickle.");

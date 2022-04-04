@@ -13,6 +13,9 @@ import static org.junit.Assert.*;
 public class MenuTests {
 
     CaTEringCapstoneCLI catering = new CaTEringCapstoneCLI();
+    Map<String, Product> productMap = new TreeMap<>();
+    BigDecimal money = new BigDecimal(0);
+    BigDecimal zero = BigDecimal.ZERO;
 
     @Test
     public void processingFedMoney_shouldProcessAndUpdateMoney_whenUserEnterValidOption1(){
@@ -174,5 +177,69 @@ public class MenuTests {
         assertEquals(expected, actual);
 
     }
-    
-}
+
+    @Test
+    public void moneyLeftFromRemovedMoney_shouldBeReturnedToCustomer_howManyDollarsQuartersDimesNickelsAreOwed() {
+
+        catering.processingFedMoney(BigDecimal.ZERO, 3);
+        BigDecimal totalChange = BigDecimal.valueOf(5.15);
+        int nickelExpected = 1;
+        int dimesExpected= 1;
+        int quartersExpected= 0;
+        int dollarsExpected= 5;
+
+        Product turkeySandwich = new Sandwich("B2", "Turkey Sandwich", "4.85", "Sandwich");
+        catering.dispensingItemByVerifyingAvailablityOfItemAndMoney(turkeySandwich);
+
+        BigDecimal actual = catering.getMoney();
+        BigDecimal balance = actual.multiply(BigDecimal.valueOf(100));
+        int dollarActual = balance.intValue() / 100;
+        balance = balance.subtract(new BigDecimal(dollarActual * 100));
+        int quarterActual = balance.intValue() / 25;
+        balance = balance.subtract(new BigDecimal(quarterActual * 25));
+        int dimeActual = balance.intValue() / 10;
+        balance = balance.subtract(new BigDecimal(dimeActual * 10));
+        int nickleActual = balance.intValue() / 5;
+
+
+        assertEquals(dollarsExpected,dollarActual);
+        assertEquals(quartersExpected, quarterActual);
+        assertEquals(dimesExpected, dimeActual);
+        assertEquals(nickelExpected, nickleActual);
+
+    }
+
+    @Test
+    public void moneyLeftFromRemovedMoney_shouldBeReturnedToCustomer_howManyDollarsQuartersDimesNickelsAreOwedButWithAPennyValue() {
+
+        catering.processingFedMoney(BigDecimal.ZERO, 2);
+        BigDecimal totalChange = BigDecimal.valueOf(2.61);
+        int nickelExpected = 0;
+        int dimesExpected= 1;
+        int quartersExpected= 2;
+        int dollarsExpected= 2;
+
+        Product turkeySandwich = new Sandwich("E1", "Pack Of Gum", "2.31", "Munchy");
+        catering.dispensingItemByVerifyingAvailablityOfItemAndMoney(turkeySandwich);
+
+        BigDecimal actual = catering.getMoney();
+        BigDecimal balance = actual.multiply(BigDecimal.valueOf(100));
+        int dollarActual = balance.intValue() / 100;
+        balance = balance.subtract(new BigDecimal(dollarActual * 100));
+        int quarterActual = balance.intValue() / 25;
+        balance = balance.subtract(new BigDecimal(quarterActual * 25));
+        int dimeActual = balance.intValue() / 10;
+        balance = balance.subtract(new BigDecimal(dimeActual * 10));
+        int nickleActual = balance.intValue() / 5;
+        if (nickleActual%5!=0) {
+            nickleActual = 0;
+        }
+
+        assertEquals(dollarsExpected,dollarActual);
+        assertEquals(quartersExpected, quarterActual);
+        assertEquals(dimesExpected, dimeActual);
+        assertEquals(nickelExpected, nickleActual);
+
+    }
+
+    }
