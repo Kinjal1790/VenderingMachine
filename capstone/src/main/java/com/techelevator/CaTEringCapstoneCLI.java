@@ -208,9 +208,6 @@ public class CaTEringCapstoneCLI {
 
 		balance = balance.subtract(new BigDecimal(dime * 10));
 		int nickle = balance.intValue() / 5;
-		if (nickle%5!=0) {
-			nickle = 0;
-		}
 
 
 		System.out.println("Here is the change: " + dollar + " dollar " + quarter + " quarter " + dime + " dime " + nickle + " nickle.");

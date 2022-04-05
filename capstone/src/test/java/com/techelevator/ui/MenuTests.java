@@ -18,12 +18,12 @@ public class MenuTests {
     BigDecimal zero = BigDecimal.ZERO;
 
     @Test
-    public void processingFedMoney_shouldProcessAndUpdateMoney_whenUserEnterValidOption1(){
+    public void processingFedMoney_shouldProcessAndUpdateMoney_whenUserEnterValidOption1() {
 
         BigDecimal bill = BigDecimal.ONE;
 
         BigDecimal expected = bill;
-        catering.processingFedMoney(BigDecimal.ZERO,1);
+        catering.processingFedMoney(BigDecimal.ZERO, 1);
         String message = "It should process and update money when user enter valid option1";
 
 
@@ -33,12 +33,12 @@ public class MenuTests {
     }
 
     @Test
-    public void processingFedMoney_shouldProcessAndUpdateMoney_whenUserEnterValidOption2(){
+    public void processingFedMoney_shouldProcessAndUpdateMoney_whenUserEnterValidOption2() {
 
         BigDecimal bill = BigDecimal.valueOf(5);
 
         BigDecimal expected = bill;
-        catering.processingFedMoney(BigDecimal.ZERO,2);
+        catering.processingFedMoney(BigDecimal.ZERO, 2);
         String message = "It should process and update money when user enter valid option2";
 
 
@@ -48,12 +48,12 @@ public class MenuTests {
     }
 
     @Test
-    public void processingFedMoney_shouldProcessAndUpdateMoney_whenUserEnterValidOption3(){
+    public void processingFedMoney_shouldProcessAndUpdateMoney_whenUserEnterValidOption3() {
 
         BigDecimal bill = BigDecimal.valueOf(10);
 
         BigDecimal expected = bill;
-        catering.processingFedMoney(BigDecimal.ZERO,3);
+        catering.processingFedMoney(BigDecimal.ZERO, 3);
         String message = "It should process and update money when user enter valid option3";
 
         BigDecimal actual = catering.getMoney();
@@ -62,12 +62,12 @@ public class MenuTests {
     }
 
     @Test
-    public void processingFedMoney_shouldProcessAndUpdateMoney_whenUserEnterValidOption4(){
+    public void processingFedMoney_shouldProcessAndUpdateMoney_whenUserEnterValidOption4() {
 
         BigDecimal bill = BigDecimal.valueOf(20);
 
         BigDecimal expected = bill;
-        catering.processingFedMoney(BigDecimal.ZERO,4);
+        catering.processingFedMoney(BigDecimal.ZERO, 4);
         String message = "It should process and update money when user enter valid option4";
 
 
@@ -77,12 +77,12 @@ public class MenuTests {
     }
 
     @Test
-    public void processingFedMoney_shouldKeepMoneyAmountSame_whenUserEnterInvalidOption0(){
+    public void processingFedMoney_shouldKeepMoneyAmountSame_whenUserEnterInvalidOption0() {
 
         BigDecimal bill = BigDecimal.valueOf(0);
 
         BigDecimal expected = bill;
-        catering.processingFedMoney(BigDecimal.ZERO,0);
+        catering.processingFedMoney(BigDecimal.ZERO, 0);
         String message = "It should keep money amount same when user enter invalid option 0";
 
 
@@ -92,12 +92,12 @@ public class MenuTests {
     }
 
     @Test
-    public void processingFedMoney_shouldKeepMoneyAmountSame_whenUserEnterInvalidOption5(){
+    public void processingFedMoney_shouldKeepMoneyAmountSame_whenUserEnterInvalidOption5() {
 
         BigDecimal bill = BigDecimal.valueOf(0);
 
         BigDecimal expected = bill;
-        catering.processingFedMoney(BigDecimal.ZERO,5);
+        catering.processingFedMoney(BigDecimal.ZERO, 5);
         String message = "It should keep money amount same when user enter invalid option 5";
 
 
@@ -108,11 +108,11 @@ public class MenuTests {
 
 
     @Test
-    public void removeMoney_shouldUpdateMoney_whenPurchaseItemMunchy(){
+    public void removeMoney_shouldUpdateMoney_whenPurchaseItemMunchy() {
 
         //fed money
         BigDecimal bill = BigDecimal.valueOf(5);
-        catering.processingFedMoney(BigDecimal.ZERO,2);
+        catering.processingFedMoney(BigDecimal.ZERO, 2);
         BigDecimal expected = BigDecimal.valueOf(1.15);
         String message = "It should remove money from available money when Nachos is purchased.";
 
@@ -127,10 +127,10 @@ public class MenuTests {
     }
 
     @Test
-    public void removeMoney_shouldUpdateMoney_whenPurchaseItemDrink(){
+    public void removeMoney_shouldUpdateMoney_whenPurchaseItemDrink() {
 
         BigDecimal bill = BigDecimal.valueOf(5);
-        catering.processingFedMoney(BigDecimal.ZERO,2);
+        catering.processingFedMoney(BigDecimal.ZERO, 2);
         BigDecimal expected = BigDecimal.valueOf(3.15);
         String message = "It should remove money from available money when Ginger Ayle is purchased.";
 
@@ -145,10 +145,10 @@ public class MenuTests {
     }
 
     @Test
-    public void removeMoney_shouldUpdateMoney_whenPurchaseItemDessert(){
+    public void removeMoney_shouldUpdateMoney_whenPurchaseItemDessert() {
 
         BigDecimal bill = BigDecimal.valueOf(5);
-        catering.processingFedMoney(BigDecimal.ZERO,2);
+        catering.processingFedMoney(BigDecimal.ZERO, 2);
         BigDecimal expected = BigDecimal.valueOf(3.25);
         String message = "It should remove money from available money when Chocolate Bar is purchased.";
 
@@ -162,10 +162,10 @@ public class MenuTests {
     }
 
     @Test
-    public void removeMoney_shouldUpdateMoney_whenPurchaseItemSandwich(){
+    public void removeMoney_shouldUpdateMoney_whenPurchaseItemSandwich() {
 
         BigDecimal bill = BigDecimal.valueOf(5);
-        catering.processingFedMoney(BigDecimal.ZERO,2);
+        catering.processingFedMoney(BigDecimal.ZERO, 2);
         BigDecimal expected = BigDecimal.valueOf(0.15);
         String message = "It should remove money from available money when Turkey Sandwich is purchased.";
 
@@ -179,14 +179,81 @@ public class MenuTests {
     }
 
     @Test
-    public void moneyLeftFromRemovedMoney_shouldBeReturnedToCustomer_howManyDollarsQuartersDimesNickelsAreOwed() {
+    public void moneyLeftFromRemovedMoney_shouldBeReturnedToCustomer_howManyDollarsAreOwed() {
+
+        catering.processingFedMoney(BigDecimal.ZERO, 3);
+        BigDecimal totalChange = BigDecimal.valueOf(5.15);
+
+        int dollarsExpected = 5;
+
+        Product turkeySandwich = new Sandwich("B2", "Turkey Sandwich", "4.85", "Sandwich");
+        catering.dispensingItemByVerifyingAvailablityOfItemAndMoney(turkeySandwich);
+
+        BigDecimal actual = catering.getMoney();
+        BigDecimal balance = actual.multiply(BigDecimal.valueOf(100));
+        int dollarActual = balance.intValue() / 100;
+
+
+        assertEquals(dollarsExpected, dollarActual);
+
+
+    }
+
+    @Test
+    public void moneyLeftFromRemovedMoney_shouldBeReturnedToCustomer_howManyQuartersAreOwed() {
+
+        catering.processingFedMoney(BigDecimal.ZERO, 3);
+        BigDecimal totalChange = BigDecimal.valueOf(5.15);
+        int quartersExpected = 0;
+
+
+        Product turkeySandwich = new Sandwich("B2", "Turkey Sandwich", "4.85", "Sandwich");
+        catering.dispensingItemByVerifyingAvailablityOfItemAndMoney(turkeySandwich);
+
+        BigDecimal actual = catering.getMoney();
+        BigDecimal balance = actual.multiply(BigDecimal.valueOf(100));
+        int dollarActual = balance.intValue() / 100;
+        balance = balance.subtract(new BigDecimal(dollarActual * 100));
+        int quarterActual = balance.intValue() / 25;
+
+
+        assertEquals(quartersExpected, quarterActual);
+
+
+    }
+
+    @Test
+    public void moneyLeftFromRemovedMoney_shouldBeReturnedToCustomer_howManyDimesAreOwed() {
+
+        catering.processingFedMoney(BigDecimal.ZERO, 3);
+        BigDecimal totalChange = BigDecimal.valueOf(5.15);
+        int dimesExpected = 1;
+
+
+        Product turkeySandwich = new Sandwich("B2", "Turkey Sandwich", "4.85", "Sandwich");
+        catering.dispensingItemByVerifyingAvailablityOfItemAndMoney(turkeySandwich);
+
+        BigDecimal actual = catering.getMoney();
+        BigDecimal balance = actual.multiply(BigDecimal.valueOf(100));
+        int dollarActual = balance.intValue() / 100;
+        balance = balance.subtract(new BigDecimal(dollarActual * 100));
+        int quarterActual = balance.intValue() / 25;
+        balance = balance.subtract(new BigDecimal(quarterActual * 25));
+        int dimeActual = balance.intValue() / 10;
+
+
+        assertEquals(dimesExpected, dimeActual);
+
+
+    }
+
+    @Test
+    public void moneyLeftFromRemovedMoney_shouldBeReturnedToCustomer_howManyNickelsAreOwed() {
 
         catering.processingFedMoney(BigDecimal.ZERO, 3);
         BigDecimal totalChange = BigDecimal.valueOf(5.15);
         int nickelExpected = 1;
-        int dimesExpected= 1;
-        int quartersExpected= 0;
-        int dollarsExpected= 5;
+
 
         Product turkeySandwich = new Sandwich("B2", "Turkey Sandwich", "4.85", "Sandwich");
         catering.dispensingItemByVerifyingAvailablityOfItemAndMoney(turkeySandwich);
@@ -201,45 +268,7 @@ public class MenuTests {
         balance = balance.subtract(new BigDecimal(dimeActual * 10));
         int nickleActual = balance.intValue() / 5;
 
-
-        assertEquals(dollarsExpected,dollarActual);
-        assertEquals(quartersExpected, quarterActual);
-        assertEquals(dimesExpected, dimeActual);
         assertEquals(nickelExpected, nickleActual);
 
     }
-
-    @Test
-    public void moneyLeftFromRemovedMoney_shouldBeReturnedToCustomer_howManyDollarsQuartersDimesNickelsAreOwedButWithAPennyValue() {
-
-        catering.processingFedMoney(BigDecimal.ZERO, 2);
-        BigDecimal totalChange = BigDecimal.valueOf(2.61);
-        int nickelExpected = 0;
-        int dimesExpected= 1;
-        int quartersExpected= 2;
-        int dollarsExpected= 2;
-
-        Product turkeySandwich = new Sandwich("E1", "Pack Of Gum", "2.31", "Munchy");
-        catering.dispensingItemByVerifyingAvailablityOfItemAndMoney(turkeySandwich);
-
-        BigDecimal actual = catering.getMoney();
-        BigDecimal balance = actual.multiply(BigDecimal.valueOf(100));
-        int dollarActual = balance.intValue() / 100;
-        balance = balance.subtract(new BigDecimal(dollarActual * 100));
-        int quarterActual = balance.intValue() / 25;
-        balance = balance.subtract(new BigDecimal(quarterActual * 25));
-        int dimeActual = balance.intValue() / 10;
-        balance = balance.subtract(new BigDecimal(dimeActual * 10));
-        int nickleActual = balance.intValue() / 5;
-        if (nickleActual%5!=0) {
-            nickleActual = 0;
-        }
-
-        assertEquals(dollarsExpected,dollarActual);
-        assertEquals(quartersExpected, quarterActual);
-        assertEquals(dimesExpected, dimeActual);
-        assertEquals(nickelExpected, nickleActual);
-
-    }
-
-    }
+}
